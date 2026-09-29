@@ -10,9 +10,11 @@ jobs:
   run-rain-alert:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Check out repository
+        uses: actions/checkout@v7
 
-      - uses: actions/setup-python@v5
+      - name: Set up Python
+        uses: actions/setup-python@v7
         with:
           python-version: "3.12"
           cache: pip
@@ -21,8 +23,8 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Run rain alert
-        run: python main.py
         env:
           OWM_API_KEY: ${{ secrets.OWM_API_KEY }}
           TWILIO_ACCT_SID: ${{ secrets.TWILIO_ACCT_SID }}
           TWILIO_AUTH_TKN: ${{ secrets.TWILIO_AUTH_TKN }}
+        run: python main.py
